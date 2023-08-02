@@ -1,0 +1,41 @@
+{
+  "name": "prompt-evaluator-ui",
+  "version": "1.0.0",
+  "source": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@vitejs/plugin-react": "^4.0.4",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@mantine/core": "^6.0.17",
+    "@mantine/dropzone": "^6.0.17",
+    "@mantine/form": "^6.0.17",
+    "@mantine/hooks": "^6.0.17",
+    "@mantine/notifications": "^6.0.17",
+    "@tabler/icons-react": "^2.30.0",
+    "@tauri-apps/api": "^1.4.0",
+    "anser": "^2.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.0"
+  }
+}

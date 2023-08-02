@@ -1,0 +1,38 @@
+{
+  "prompt": "How many {{name}} are in this array? {{array}}",
+  "system": "{{system}}",
+  "variables": {
+    "{{name}}": [
+      "numbers",
+      "elements"
+    ],
+    "{{array}}": [
+      "[1, 2, 3]",
+      "{1 2 3}"
+    ],
+    "{{system}}": [
+      "Respond concisely and accurately",
+      "Respond with a single integer"
+    ]
+  },
+  "localModels": [
+    {
+      "path": "models/orca-mini-3b.ggmlv3.q4_0.bin",
+      "templatePath": "models/orca-mini-template",
+      "architecture": "llama",
+      "skip": false
+    },
+    {
+      "path": "models/llama-2-7b-chat.bin",
+      "templatePath": "models/llama-2-template",
+      "architecture": "llama",
+      "skip": false
+    }
+  ],
+  "remoteModels": [
+    {
+      "name": "fastchat-t5-3b-v1.0",
+      "apiBaseUrl": "http://localhost:8000/v1"
+    }
+  ]
+}
