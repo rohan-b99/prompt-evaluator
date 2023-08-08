@@ -4,13 +4,13 @@ use llm::{
     InferenceError, InferenceFeedback, InferenceParameters, InferenceRequest, InferenceResponse,
     Model, ModelArchitecture, ModelParameters,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use std::sync::mpsc::Sender;
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ModelConfig {
     path: PathBuf,

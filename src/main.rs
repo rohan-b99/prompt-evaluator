@@ -46,16 +46,21 @@ enum Commands {
         /// Path to input file
         input_path: PathBuf,
     },
+    /// Generate an empty input file
+    New {
+        // Path to generate the file at
+        path: PathBuf,
+    },
     /// Start the UI
     #[cfg(feature = "ui")]
     Ui {},
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 struct Input {
-    prompt: String,
     system: String,
+    prompt: String,
     variables: BTreeMap<String, Vec<String>>,
     #[cfg(feature = "local")]
     local_models: Vec<local::ModelConfig>,
@@ -88,6 +93,12 @@ fn main() -> Result<()> {
         Commands::Run { input_path } => run(input_path, &args),
         #[cfg(feature = "ui")]
         Commands::Ui {} => ui::start(&args),
+        Commands::New { path } => {
+            let json = serde_json::to_string_pretty(&Input::default())?;
+            std::fs::write(path, json)?;
+            tracing::info!("wrote {}", path.display());
+            Ok(())
+        }
     }
 }
 
