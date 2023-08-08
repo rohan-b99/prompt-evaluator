@@ -1,0 +1,28 @@
+{
+  "system": "Provide a name and a short reason for each answer in {{format}} format",
+  "prompt": "What are the top 5 cities to visit in {{country}}",
+  "variables": {
+    "{{format}}": [
+      "HTML",
+      "JSON"
+    ],
+    "{{country}}": [
+      "France",
+      "Spain",
+      "Italy"
+    ]
+  },
+  "localModels": [
+    {
+      "path": "models/orca-mini-3b.ggmlv3.q4_0.bin",
+      "templatePath": "models/orca-mini-template",
+      "architecture": "llama"
+    },
+    {
+      "path": "models/llama-2-7b-chat.bin",
+      "templatePath": "models/llama-2-template",
+      "architecture": "llama"
+    }
+  ],
+  "remoteModels": []
+}
