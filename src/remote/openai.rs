@@ -20,9 +20,12 @@ pub fn run(
 ) -> Result<()> {
     let total = variants.len() * model_configs.len();
 
-    let handle = match tokio::runtime::Handle::try_current() {
-        Ok(handle) => handle,
-        Err(_) => tokio::runtime::Runtime::new()?.handle().clone(),
+    let (handle, _rt) = match tokio::runtime::Handle::try_current() {
+        Ok(handle) => (handle, None),
+        Err(_) => {
+            let rt = tokio::runtime::Runtime::new()?;
+            (rt.handle().clone(), Some(rt))
+        }
     };
 
     handle.block_on(async {

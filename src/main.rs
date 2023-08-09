@@ -174,6 +174,7 @@ fn default_output_path() -> PathBuf {
 /// to append any results recieved
 fn setup_output(args: &Args, rx: Receiver<RunOutput>) {
     let output_path = args.output.clone().unwrap_or_else(default_output_path);
+    tracing::info!("writing output to {}", output_path.display());
 
     std::thread::spawn(move || {
         let mut output_file = std::io::BufWriter::new(
