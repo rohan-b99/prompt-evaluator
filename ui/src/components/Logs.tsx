@@ -1,36 +1,28 @@
 import { Flex, Code } from "@mantine/core";
-import { useListState } from "@mantine/hooks";
 import { listen } from "@tauri-apps/api/event";
 import { ansiToHtml } from "anser";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Logs() {
-  const [logParts, logPartsHandlers] = useListState<string>([]);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const unlisten = listen<string>("log", (event) =>
-      logPartsHandlers.append(event.payload)
-    );
+    const unlisten = listen<string>("log", (event) => {
+      if (ref.current) {
+        ref.current.innerHTML += ansiToHtml(event.payload);
+      }
+    });
 
     return () => {
       unlisten.then((fn) => fn());
     };
-  }, [logPartsHandlers]);
+  }, []);
 
   return (
     <Flex direction="column" w="100%" align="center">
-      {logParts.length === 0 ? (
-        <span>No logs yet</span>
-      ) : (
-        <Code block>
-          {logParts.map((part, idx) => (
-            <span
-              key={idx}
-              dangerouslySetInnerHTML={{ __html: ansiToHtml(part) }}
-            ></span>
-          ))}
-        </Code>
-      )}
+      <Code ref={ref} block w="100%" sx={{ whiteSpace: "pre-line" }}>
+        <></>
+      </Code>
     </Flex>
   );
 }
