@@ -1,6 +1,6 @@
 {
   "system": "Provide a name and a short reason for each answer in {{format}} format",
-  "prompt": "What are the top 5 cities to visit in {{country}}",
+  "prompt": "What are the top 5 cities to visit in {{country}}?",
   "variables": {
     "{{format}}": [
       "HTML",
@@ -24,5 +24,10 @@
       "architecture": "llama"
     }
   ],
-  "remoteModels": []
+  "remoteModels": [
+    {
+      "name": "gpt-3.5-turbo",
+      "apiBaseUrl": "https://api.openai.com/v1"
+    }
+  ]
 }

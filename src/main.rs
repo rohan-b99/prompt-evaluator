@@ -1,8 +1,3 @@
-#![cfg_attr(
-    all(not(debug_assertions), feature = "ui"),
-    windows_subsystem = "windows"
-)]
-
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use itertools::Itertools;
@@ -119,7 +114,7 @@ fn run(input_path: &Path, args: &Args) -> Result<()> {
 
     let variants: Vec<Vec<(&str, &str)>> = make_variants(&variables);
 
-    tracing::info!("generated {} variants", variants.len());
+    tracing::info!("generated {} prompt variants", variants.len());
 
     let (tx, rx) = std::sync::mpsc::channel::<RunOutput>();
 

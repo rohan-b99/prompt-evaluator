@@ -1,6 +1,6 @@
 # prompt-evaluator
 
-CLI tool for generating and running variants of prompts against both LLMs (via https://github.com/rustformers/llm) and remote APIs (currently only OpenAI or OpenAI-compatible servers)
+CLI + UI tool for generating and running variants of prompts against both LLMs (via https://github.com/rustformers/llm) and remote APIs (currently only OpenAI or OpenAI-compatible servers)
 
 ## Installation
 
@@ -22,14 +22,21 @@ Then install with one of the matching features:
 
 ## How to use
 
-### CLI mode:
+Prepare a JSON file following the format shown in `samples/top-cities.json`.
 
-Prepare a JSON file following the format shown in `samples/sample.json`.
-Models must be in GGML format.
+Local models must be in GGML format.
+
+If using models on the OpenAI API, make sure the environment variable `OPENAI_API_KEY` is set.
+
+### CLI mode:
 
 The command below will append each output to `output.ndjson`, use GPU acceleration if available, and stream response output to the terminal.
 
 `prompt-evaluator [input.json] -o output.ndjson --use-gpu --show-output`
+
+### UI Mode (WIP):
+
+`cargo run --release --features cublas -- --use-gpu ui`
 
 ## Developing
 
