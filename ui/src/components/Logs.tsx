@@ -4,12 +4,14 @@ import { ansiToHtml } from "anser";
 import { useEffect, useRef } from "react";
 
 export default function Logs() {
-  const ref = useRef<HTMLElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const codeRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const unlisten = listen<string>("log", (event) => {
-      if (ref.current) {
-        ref.current.innerHTML += ansiToHtml(event.payload);
+      if (codeRef.current) {
+        codeRef.current.innerHTML += ansiToHtml(event.payload);
+        rootRef.current?.scrollIntoView(false);
       }
     });
 
@@ -19,8 +21,14 @@ export default function Logs() {
   }, []);
 
   return (
-    <Flex direction="column" w="100%" align="center">
-      <Code ref={ref} block w="100%" sx={{ whiteSpace: "pre-line" }}>
+    <Flex ref={rootRef} direction="column" w="100%" align="center">
+      <Code
+        ref={codeRef}
+        block
+        w="100%"
+        h="100%"
+        sx={{ overflow: "auto", maxHeight: "95%", whiteSpace: "pre" }}
+      >
         <></>
       </Code>
     </Flex>

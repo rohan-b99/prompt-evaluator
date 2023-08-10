@@ -14,10 +14,14 @@ import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { listen } from "@tauri-apps/api/event";
+import { notifications } from "@mantine/notifications";
 
 export default function Editor() {
   const input = useAppStore(({ input }) => input) as Input;
   const setOutput = useAppStore(({ setOutput }) => setOutput);
+  const { setActiveTab } = useAppStore(({ setActiveTab }) => ({
+    setActiveTab,
+  }));
 
   type Variables = typeof input.variables;
 
@@ -46,7 +50,8 @@ export default function Editor() {
 
     invoke("run", { json });
     setRunning(true);
-  }, []);
+    setTimeout(() => setActiveTab("Logs"), 1000);
+  }, [setActiveTab]);
 
   useEffect(() => {
     const unlisten = listen<string>("done", (event) => {
@@ -57,13 +62,19 @@ export default function Editor() {
         .filter(Boolean)
         .map((line) => JSON.parse(line));
 
+      notifications.show({
+        title: "Run complete",
+        message: `${output.length} outputs generated`,
+      });
+
       setOutput(output);
+      setTimeout(() => setActiveTab("Results"), 1000);
     });
 
     return () => {
       unlisten.then((fn) => fn());
     };
-  }, [setOutput]);
+  }, [setActiveTab, setOutput]);
 
   return (
     <Box my="sm">
@@ -89,7 +100,7 @@ export default function Editor() {
               <Button
                 my="sm"
                 ml="sm"
-                variant="outline  "
+                variant="outline"
                 compact
                 onClick={() =>
                   form.insertListItem("variables", { key: "", values: [""] })

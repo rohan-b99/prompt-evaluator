@@ -17,11 +17,10 @@ import { useAppStore } from "./store";
 import Logs from "./components/Logs";
 import Editor from "./components/Editor";
 import Results from "./components/Results";
-import { useState } from "react";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 
 const tabs = ["Editor", "Logs", "Results"] as const;
-type AppTab = (typeof tabs)[number];
+export type AppTab = (typeof tabs)[number];
 
 export default function App() {
   const preferredColorScheme = useColorScheme();
@@ -37,7 +36,9 @@ export default function App() {
   useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
   const input = useAppStore(({ input }) => input);
-  const [active, setActive] = useState<AppTab>("Editor");
+  const { activeTab, setActiveTab } = useAppStore(
+    ({ activeTab, setActiveTab }) => ({ activeTab, setActiveTab })
+  );
 
   return (
     <ColorSchemeProvider
@@ -64,8 +65,8 @@ export default function App() {
                   <NavLink
                     key={tab}
                     label={tab}
-                    active={active === tab}
-                    onClick={() => setActive(tab)}
+                    active={activeTab === tab}
+                    onClick={() => setActiveTab(tab)}
                   />
                 ))}
               </Navbar.Section>
@@ -75,13 +76,13 @@ export default function App() {
           <Container fluid>
             {input ? (
               <>
-                <Box display={active === "Editor" ? "block" : "none"}>
+                <Box display={activeTab === "Editor" ? "block" : "none"}>
                   <Editor />
                 </Box>
-                <Box display={active === "Logs" ? "block" : "none"}>
+                <Box display={activeTab === "Logs" ? "block" : "none"}>
                   <Logs />
                 </Box>
-                <Box display={active === "Results" ? "block" : "none"}>
+                <Box display={activeTab === "Results" ? "block" : "none"}>
                   <Results />
                 </Box>
               </>

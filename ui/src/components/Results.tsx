@@ -16,7 +16,7 @@ export default function Results() {
             <Divider label="User" />
             <Code block>{user}</Code>
             <Divider label="Response" />
-            <Code block sx={{ whiteSpace: "pre-line" }}>
+            <Code block sx={{ whiteSpace: "pre-wrap" }}>
               {response}
             </Code>
           </Card>
