@@ -1,6 +1,6 @@
 # prompt-evaluator
 
-CLI + UI tool for generating and running variants of prompts against both LLMs (via https://github.com/rustformers/llm) and remote APIs (currently only OpenAI or OpenAI-compatible servers)
+CLI + UI tool for generating and running variants of prompts against both local LLMs (via https://github.com/rustformers/llm) and remote APIs (currently only OpenAI or OpenAI-compatible servers)
 
 ## Installation
 
@@ -35,6 +35,20 @@ The command below will append each output to `output.ndjson`, use GPU accelerati
 `prompt-evaluator [input.json] -o output.ndjson --use-gpu --show-output`
 
 ### UI Mode (WIP):
+
+<details>
+
+<summary>Screenshots</summary>
+
+<img src="https://github.com/rohan-b99/prompt-evaluator/assets/43239788/dfae3051-1f5f-439a-b130-69d6c24e3db9" width="1000"/>
+
+<img src="https://github.com/rohan-b99/prompt-evaluator/assets/43239788/62dcad8f-3c22-4fd9-a56e-452ca475dae6" width="1000"/>
+
+<img src="https://github.com/rohan-b99/prompt-evaluator/assets/43239788/80bc085e-6b48-4d8a-abf5-87b23110525a" width="1000"/>
+
+</details>
+
+`npm run --prefix ui dev`
 
 `cargo run --release --features cublas -- --use-gpu ui`
 
