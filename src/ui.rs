@@ -1,4 +1,4 @@
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufReader, Write};
 use std::process::{Command, Stdio};
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::Sender;
@@ -92,13 +92,15 @@ fn run_inner(json: &str, output_path: String, tx: Sender<String>) -> anyhow::Res
 }
 
 fn stream_output<R: std::io::Read>(
-    mut reader: BufReader<R>,
+    reader: BufReader<R>,
     tx: Sender<String>,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let mut buf = vec![];
-    while reader.read_until(b' ', &mut buf)? > 0 {
-        tx.send(String::from_utf8_lossy(&buf).to_string())?;
-        buf.clear();
+    let mut utf8_reader = utf8::BufReadDecoder::new(reader);
+
+    while let Some(result) = utf8_reader.next_lossy() {
+        if let Ok(str) = result {
+            tx.send(str.to_string())?;
+        }
     }
     Ok(())
 }

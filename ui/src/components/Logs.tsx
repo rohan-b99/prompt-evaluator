@@ -27,7 +27,7 @@ export default function Logs() {
         block
         w="100%"
         h="100%"
-        sx={{ overflow: "auto", maxHeight: "95%", whiteSpace: "pre" }}
+        sx={{ overflow: "auto", maxHeight: "95%", whiteSpace: "pre-wrap" }}
       >
         <></>
       </Code>
